@@ -1,0 +1,35 @@
+package pt.ipt.api.retrofit.service
+
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Headers
+import retrofit2.http.POST
+
+interface AuthService {
+    @Headers("Accept: application/json", "Content-Type: application/json")
+    @POST("api/Authentication/login")
+    fun login(@Body body: LoginRequest):Call<LoginResponse>
+}
+
+data class LoginRequest(
+    val username: String,
+    val password: String
+)
+
+data class LoginResponse(
+    val token: Token
+)
+
+data class Token(
+    val result: String,
+    val id: Int,
+    val exception: String?,
+    val status: Int,
+    val isCanceled: Boolean,
+    val isCompleted: Boolean,
+    val isCompletedSuccessfully: Boolean,
+    val creationOptions: Int,
+    val asyncState: String?,
+    val isFaulted: Boolean
+)
