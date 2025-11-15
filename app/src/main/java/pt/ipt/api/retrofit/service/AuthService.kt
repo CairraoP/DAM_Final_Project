@@ -1,5 +1,6 @@
 package pt.ipt.api.retrofit.service
 
+import android.R
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -10,16 +11,32 @@ interface AuthService {
     @Headers("Accept: application/json", "Content-Type: application/json")
     @POST("api/Authentication/login")
     fun login(@Body body: LoginRequest):Call<LoginResponse>
+
+    @POST("api/Authentication/register")
+    fun register(@Body body: RegisterRequest):Call<RegisterResponse>
 }
 
 data class LoginRequest(
     val username: String,
     val password: String
 )
-
 data class LoginResponse(
     val token: Token
 )
+
+data class RegisterResponse(
+    val message: String,
+    val token: Token
+)
+
+
+data class RegisterRequest(
+    val username: String,
+    val password: String,
+    val is_artista: Boolean,
+    val email: String
+)
+
 
 data class Token(
     val result: String,

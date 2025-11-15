@@ -13,12 +13,11 @@ import pt.ipt.api.model.Album
 import pt.ipt.api.model.GlobalVariables
 import pt.ipt.api.retrofit.RetrofitInitializer
 import pt.ipt.api.ui.adapter.AlbumListAdapter
-import pt.ipt.api.retrofit.service.AlbumService
+import androidx.fragment.app.Fragment
 import pt.ipt.api.retrofit.service.TokenManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.random.Random
 
 
 class AlbumListActivity : AppCompatActivity() {
@@ -35,10 +34,10 @@ class AlbumListActivity : AppCompatActivity() {
             return
         }
 
-        val button: Button = findViewById(R.id.button)
+       /* val button: Button = findViewById(R.id.button)
         button.setOnClickListener {
             listAlbums()
-        }
+        }*/
     }
 
     private fun configureList(Albums: List<Album>) {

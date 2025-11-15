@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">API</string>
-    <string name="see_musicas">See Musicas</string>
+    <string name="see_musicas">Ver Musicas</string>
     <string name="login">Login</string>
+    <string name="Register">Registar</string>
 </resources>
