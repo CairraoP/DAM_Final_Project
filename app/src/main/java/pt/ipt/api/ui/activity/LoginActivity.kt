@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import android.os.Bundle
 import android.view.View
+import com.google.gson.Gson
 import pt.ipt.api.databinding.ActivityLoginBinding
 import pt.ipt.api.databinding.ActivityRegisterBinding
 import pt.ipt.api.retrofit.service.ApiClient.authService
@@ -90,8 +91,13 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     }
                 } else {
-                    Toast.makeText(this@LoginActivity, "Algo falhou - Confirme os dados de login", Toast.LENGTH_SHORT).show()
-                }
+
+                    val errorJson = response.errorBody()?.string();
+                    //é necessário meter o RegistorError::class.java para o Gson saber que objeto dar parse no errorBody
+                    val errorMessage = Gson().fromJson(errorJson, ApiError::class.java)
+
+                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG).show()
+                    }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -136,7 +142,12 @@ class LoginActivity : AppCompatActivity() {
                     // Redirecionar para a view de confirmação de email - TODO
                     setContentView(loginBinding.root)
                 } else {
-                    Toast.makeText(this@LoginActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+
+                    val errorJson = response.errorBody()?.string();
+                    //é necessário meter o RegistorError::class.java para o Gson saber que objeto dar parse no errorBody
+                    val errorMessage = Gson().fromJson(errorJson, ApiError::class.java)
+
+                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG).show()
                 }
             }
 

@@ -1,8 +1,6 @@
 package pt.ipt.api.retrofit.service
 
-import android.R
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -37,6 +35,9 @@ data class RegisterRequest(
     val email: String
 )
 
+data class ApiError(
+    val message: String
+)
 
 data class Token(
     val result: String,
