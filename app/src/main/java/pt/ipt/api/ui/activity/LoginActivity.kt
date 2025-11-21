@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         /*val token =  TokenManager.getToken()
 
         if(!token.isNullOrEmpty()){
-            val intent = Intent(this@LoginActivity, AlbumListActivity::class.java)
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
 
             intent.putExtra("user_token", token)
 
@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
 
                         //Dizer que queremos criar a "intenção" de sair desta atividade (thisLoginActivity)
                         // e ir para a atividade do album
-                        val intent = Intent(this@LoginActivity, AlbumListActivity::class.java)
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
 
                         //passar dados extra, neste caso o jwt token
                         intent.putExtra("user_token", token)
@@ -106,10 +106,10 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+
     /**
      * SECÇÃO DE REGISTO DA APP
      */
-
 
     /**
      * Função para renderizar com o registo

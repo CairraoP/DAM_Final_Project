@@ -30,7 +30,7 @@
         Dizemos que é falso como exported-->
 
         <activity
-            android:name=".ui.activity.AlbumListActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true" />
     </application>
 
