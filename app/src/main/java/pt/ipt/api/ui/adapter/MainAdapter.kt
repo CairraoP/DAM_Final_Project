@@ -1,6 +1,5 @@
 package pt.ipt.api.ui.adapter
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +7,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.w3c.dom.Text
 import pt.ipt.api.R
 import pt.ipt.api.model.Album
 import pt.ipt.api.model.GlobalVariables
+import pt.ipt.api.model.Music
 
-class AlbumListAdapter(private val albums: List<Album>, private val context: Context) :
-    RecyclerView.Adapter<AlbumListAdapter.ViewHolder>() {
+class MainAdapter(private val albums: List<Album>,
+                  private val context: Context,
+    private val onAlbumClick: (Int) -> Unit) :
+    RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = albums[position]
         holder.bindView(album)
+
+        holder.itemView.setOnClickListener {
+            onAlbumClick(album.id)   // enviar id do album para a activity
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,15 +44,11 @@ class AlbumListAdapter(private val albums: List<Album>, private val context: Con
         fun bindView(album: Album) {
 
             title.text = album.titulo
-            //temporario
-            description.text = album.foto
             val imageUrl = GlobalVariables.CON_STRING+album.foto
-
             //Debug Line
             //Log.d("AlbumAdapter", "Image URL: $imageUrl")
 
-
-            if (!imageUrl.isNullOrEmpty()) {
+            if (imageUrl.isNotEmpty()) {
                     Glide.with(itemView.context)
                         .load(imageUrl)
                         .into(imgView)
@@ -56,7 +57,6 @@ class AlbumListAdapter(private val albums: List<Album>, private val context: Con
                 }
 
         }
-
-        }
+    }
     }
 

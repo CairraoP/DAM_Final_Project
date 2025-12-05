@@ -16,6 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.API"
         android:usesCleartextTraffic="true">
+
+        <!--Como o Activity do album não vai ser chamado como atividade primária e será referenciado por meio do intent
+Dizemos que é falso como exported-->
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.activity.MusicActivity"
+            android:exported="true" />
+
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="true">
@@ -26,12 +38,11 @@
             </intent-filter>
         </activity>
 
-        <!--Como o Activity do album não vai ser chamado como atividade primária e será referenciado por meio do intent
-        Dizemos que é falso como exported-->
+        <service
+            android:name=".retrofit.service.playerService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
-        <activity
-            android:name=".ui.activity.MainActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

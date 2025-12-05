@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.androidx.media)
     implementation(libs.glide)  // latest Glide
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

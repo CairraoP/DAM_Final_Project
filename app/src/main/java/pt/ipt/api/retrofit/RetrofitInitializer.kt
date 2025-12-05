@@ -24,4 +24,5 @@ class RetrofitInitializer {
         .build()
 
     fun albumService() = retrofit.create(AlbumService::class.java)
+
 }

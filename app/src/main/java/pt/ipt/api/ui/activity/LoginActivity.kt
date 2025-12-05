@@ -81,9 +81,6 @@ class LoginActivity : AppCompatActivity() {
                         // e ir para a atividade do album
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
 
-                        //passar dados extra, neste caso o jwt token
-                        intent.putExtra("user_token", token)
-
                         //Comecar atividade
                         startActivity(intent)
 
