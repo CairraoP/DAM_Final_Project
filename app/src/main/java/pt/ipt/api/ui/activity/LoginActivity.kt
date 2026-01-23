@@ -7,18 +7,17 @@ import pt.ipt.api.retrofit.service.*
 import retrofit2.Call
 import retrofit2.Callback
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.google.gson.Gson
 import pt.ipt.api.databinding.ActivityLoginBinding
 import pt.ipt.api.databinding.ActivityRegisterBinding
 import pt.ipt.api.retrofit.service.ApiClient.authService
 import retrofit2.Response
-import kotlin.math.log
-
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginBinding : ActivityLoginBinding
-    private lateinit var registerBinding : ActivityRegisterBinding
+    private lateinit var loginBinding: ActivityLoginBinding
+    private lateinit var registerBinding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +29,8 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(loginBinding.root)
         // Initialize token manager
-        TokenManager.init(applicationContext)
+        //TokenManager.init(applicationContext)
+        Log.d("Token Response:",TokenManager.getToken().toString())
 
         //NOTA FUTURA: QUANDO HOUVER SPLASH SCREEN, TROCAR ESTE CÓDIGO NO LOGIN DO JWT PARA O SPLASH SCREEN
 
@@ -56,7 +56,12 @@ class LoginActivity : AppCompatActivity() {
      * Validar o username e password e caso sejam válidos, ver o token devolvido pelo servidor.
      * Se o token for válido, permitir que o user passe para a aplicação
      */
-    fun enterLogin(view: View){
+
+    fun renderLogin(view: View) {
+        setContentView(loginBinding.root)
+    }
+
+    fun enterLogin(view: View) {
 
         val username = loginBinding.usernameField.text.toString()
         val password = loginBinding.passwordField.text.toString()
@@ -68,11 +73,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
 
-                    var token = TokenManager.getToken()
-
-                    if (token.isNullOrEmpty()){
-                        token = response.body()?.token?.result
-                    }
+                    var token = response.body()?.token?.result
 
                     if (!token.isNullOrEmpty()) {
                         TokenManager.saveToken(token)
@@ -93,8 +94,9 @@ class LoginActivity : AppCompatActivity() {
                     //é necessário meter o RegistorError::class.java para o Gson saber que objeto dar parse no errorBody
                     val errorMessage = Gson().fromJson(errorJson, ApiError::class.java)
 
-                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG).show()
-                    }
+                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG)
+                        .show()
+                }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -110,12 +112,12 @@ class LoginActivity : AppCompatActivity() {
 
     /**
      * Função para renderizar com o registo
-      */
-    fun renderRegister(view :View){
+     */
+    fun renderRegister(view: View) {
         setContentView(registerBinding.root)
     }
 
-    fun enterRegister(view: View){
+    fun enterRegister(view: View) {
 
         val username = registerBinding.usernameField.text.toString()
         val email = registerBinding.emailField.text.toString()
@@ -126,11 +128,15 @@ class LoginActivity : AppCompatActivity() {
             username = username,
             email = email,
             password = password,
-            is_artista = is_artista)
+            is_artista = is_artista
+        )
 
         // Make the login request
         authService.register(registBody).enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
                 if (response.isSuccessful) {
                     // Mostrar a mensagem vinda da API
                     val message = response.body()?.message ?: "Registo concluído!"
@@ -144,12 +150,14 @@ class LoginActivity : AppCompatActivity() {
                     //é necessário meter o RegistorError::class.java para o Gson saber que objeto dar parse no errorBody
                     val errorMessage = Gson().fromJson(errorJson, ApiError::class.java)
 
-                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG)
+                        .show()
                 }
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Erro de rede: ${t.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@LoginActivity, "Erro de rede: ${t.message}", Toast.LENGTH_LONG)
+                    .show()
             }
         })
     }

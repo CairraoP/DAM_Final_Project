@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Main content -->
-    <FrameLayout
-        android:id="@+id/contentFrame"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- Mini Player floating at the bottom -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center_horizontal">   <!-- centers child horizontally -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:layout_marginTop="30dp"
+            android:elevation="4dp"/>
 
-        <include
-            layout="@layout/bottom_player"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="50dp"
-            android:elevation="8dp"
-            android:visibility="gone" />
-    </FrameLayout>
+        <!-- This FrameLayout holds your MainActivity content -->
+        <FrameLayout
+            android:id="@+id/contentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-</FrameLayout>
+        <!-- Mini Player at the bottom -->
+        <FrameLayout
+            android:id="@+id/miniPlayerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/bottom_player" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/sidebar_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

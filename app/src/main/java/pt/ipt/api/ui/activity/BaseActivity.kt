@@ -1,51 +1,76 @@
 package pt.ipt.api.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import pt.ipt.api.R
 import pt.ipt.api.model.Music
 import pt.ipt.api.retrofit.service.playerService
 
 open class BaseActivity : AppCompatActivity() {
 
-    protected lateinit var miniPlayer: View
-    protected lateinit var musicTitle: TextView
-    protected lateinit var btnPlayPause: ImageButton
+    //Foi necessário assumir as variáveis relacionadas ao botão de música como Null por causa da ordem dos inflates.
+    protected var miniPlayer: View? = null
+    protected var musicTitle: TextView? = null
+    protected var btnPlayPause: ImageButton? = null
 
-    // ✔ MUST be named playService so child Activities can access it
+    lateinit var drawerLayout: DrawerLayout
+    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+
+    // MUST be named playService so child Activities can access it
     protected var playService: playerService? = null
     private var bound = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_base)
+        // drawer layout instance to toggle the menu icon to open
+        // drawer and back button to close drawer
+        drawerLayout = findViewById(R.id.drawer_layout)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        // pass the Open and Close toggle for the drawer layout listener
+        // to toggle the button
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+
+        // to make the Navigation drawer icon always appear on the action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun setContentView(layoutResID: Int) {
-        // Inflate base layout
-        val base = layoutInflater.inflate(R.layout.activity_base, null)
-        val container = base.findViewById<FrameLayout>(R.id.contentFrame)
+    @SuppressLint("InflateParams")
+     fun setContentViewChild(layoutResID: Int) {
+            // 1. Find the container that was already inflated in onCreate
+            val container = findViewById<FrameLayout>(R.id.contentFrame)
 
-        // Inflate child layout inside the container
-        layoutInflater.inflate(layoutResID, container, true)
-        super.setContentView(base)
+            // 2. Clear it just in case, then inflate the child layout into it
+            container.removeAllViews()
+            layoutInflater.inflate(layoutResID, container, true)
 
-        // Bind mini-player UI
-        miniPlayer = base.findViewById(R.id.musicPlayerBar)
-        musicTitle = base.findViewById(R.id.musicTitle)
-        btnPlayPause = base.findViewById(R.id.btnPlayPause)
+            // 3. Bind your player UI views (they exist in activity_base)
+            // Ensure IDs match what is inside @layout/bottom_player
+            miniPlayer = findViewById(R.id.musicPlayerBar)
+            musicTitle = findViewById(R.id.musicTitle)
+            btnPlayPause = findViewById(R.id.btnPlayPause)
 
-        btnPlayPause.setOnClickListener {
-            playService?.toggle()
+            btnPlayPause?.setOnClickListener {
+                playService?.toggle()
+            }
         }
-    }
 
     // Service binding
     private val connection = object : ServiceConnection {
@@ -80,12 +105,23 @@ open class BaseActivity : AppCompatActivity() {
 
     // Default mini-player UI update
     protected open fun updateMiniPlayer(m: Music, playing: Boolean) {
-        miniPlayer.visibility = View.VISIBLE
+        miniPlayer?.visibility = View.VISIBLE
 
-        musicTitle.text = m.nome  // or m.title — match your model
+        musicTitle?.text = m.nome  // or m.title — match your model
 
-        btnPlayPause.setImageResource(
+        btnPlayPause?.setImageResource(
             if (playing) R.drawable.ic_pause else R.drawable.ic_play
         )
+    }
+
+    // override the onOptionsItemSelected()
+    // function to implement
+    // the item click listener callback
+    // to open and close the navigation
+    // drawer when the icon is clicked
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            true
+        } else super.onOptionsItemSelected(item)
     }
 }

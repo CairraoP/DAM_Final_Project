@@ -42,13 +42,14 @@ android {
 
 dependencies {
 
+    implementation("com.google.android.material:material:1.3.0-alpha03")
+    implementation(libs.material.v1110)
     implementation(libs.androidx.media)
     implementation(libs.glide)  // latest Glide
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)

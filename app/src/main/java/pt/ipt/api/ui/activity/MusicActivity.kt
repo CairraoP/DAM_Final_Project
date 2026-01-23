@@ -27,7 +27,7 @@ class MusicActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.music_list)
+        setContentViewChild(R.layout.music_list)
 
         albumImageView = findViewById(R.id.fotoAlbum)
         // Receive album ID
@@ -35,8 +35,9 @@ class MusicActivity : BaseActivity() {
 
         if (albumId == -1) {
             Toast.makeText(this, "O álbum não foi encontrado", Toast.LENGTH_SHORT).show()
-        }
+        }else{
         listMusics()
+        }
     }
 
      fun configureList(albumObject: Album, musics: List<Music>) {

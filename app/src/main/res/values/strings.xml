@@ -2,5 +2,12 @@
     <string name="app_name">API</string>
     <string name="see_musicas">Ver Musicas</string>
     <string name="login">Login</string>
-    <string name="Register">Registar</string>
+    <string name="register">Registar</string>
+    <string name="registe_se_aqui">Registe-se aqui</string>
+    <string name="artista">É artista?</string>
+    <string name="tem_conta_registo">Já tem conta?</string>
+    <string name="return_to_login">Voltar ao login</string>
+    <string name="sideBar_name">Navigation Drawer</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 </resources>
