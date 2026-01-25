@@ -90,12 +90,8 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } else {
 
-                    val errorJson = response.errorBody()?.string();
-                    //é necessário meter o RegistorError::class.java para o Gson saber que objeto dar parse no errorBody
-                    val errorMessage = Gson().fromJson(errorJson, ApiError::class.java)
+                    Toast.makeText(this@LoginActivity, "Algo correu mal, por favor confirme os seus dados", Toast.LENGTH_LONG).show()
 
-                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG)
-                        .show()
                 }
             }
 
@@ -145,14 +141,90 @@ class LoginActivity : AppCompatActivity() {
                     // Redirecionar para a view de confirmação de email - TODO
                     setContentView(loginBinding.root)
                 } else {
+                    // 1. Read the error body ONCE into a variable
+                    val errorJson = response.errorBody()?.string()
 
-                    val errorJson = response.errorBody()?.string();
-                    //é necessário meter o RegistorError::class.java para o Gson saber que objeto dar parse no errorBody
-                    val errorMessage = Gson().fromJson(errorJson, ApiError::class.java)
+                    // 2. Parse the JSON
+                    val apiError = try {
+                        errorJson?.let {
+                                Gson().fromJson(it, ApiError::class.java).errors
+                        }
+                    } catch (e: Exception) {
+                        null
+                    }
 
-                    Toast.makeText(this@LoginActivity, errorMessage.message, Toast.LENGTH_LONG)
-                        .show()
+                    // 2. Parse the JSON
+                    val apiErrorMessage = try {
+                        errorJson?.let {
+                            Gson().fromJson(it, ApiError::class.java).message
+                        }
+                    } catch (e: Exception) {
+                        null
+                    }
+
+                    // 3. Clear previous errors so they don't stay visible from the last attempt
+                    registerBinding.usernameLayout.error = null
+                    registerBinding.emailLayout.error = null
+                    registerBinding.passwordLayout.error = null
+
+                    // 4. Show the error messages
+                    apiError.let { errors ->
+                        // Note: Assuming 'errorMessage' is a List<String> based on your joinToString code
+                        val fullErrorMessage = errors?.joinToString("\n")
+
+                        var ErrorsToPortuguese = ""
+
+                        // Logic: Try to put the error under the correct field
+                        when {
+                            fullErrorMessage?.contains("email", ignoreCase = true) == true -> {
+                                registerBinding.emailLayout.error = fullErrorMessage
+                            }
+                            fullErrorMessage?.contains("Nome", ignoreCase = true) == true ||
+                                    fullErrorMessage?.contains("utilizador", ignoreCase = true) == true -> {
+                                registerBinding.usernameLayout.error = fullErrorMessage
+                            }
+                            fullErrorMessage?.contains("password", ignoreCase = true) == true -> {
+
+                                if(fullErrorMessage.contains("digit"))
+                                    ErrorsToPortuguese = ErrorsToPortuguese + ("Palavras-Passe devem conter pelo menos um dígito.\n")
+
+                                if(fullErrorMessage.contains("alphanumeric"))
+                                    ErrorsToPortuguese = ErrorsToPortuguese + ("Palavras-Passe devem conter pelo menos um caracter especial.\n")
+
+                                if(fullErrorMessage.contains("6"))
+                                    ErrorsToPortuguese = ErrorsToPortuguese + ("Palavras-Passe devem ter pelo menos 6 caracteres.\n")
+
+                                registerBinding.passwordLayout.error = ErrorsToPortuguese
+                            }
+                            else -> {
+                                // If we don't know which field it is, show a Toast
+                                Toast.makeText(this@LoginActivity, "Ups! Algo correu mal, por favor confirme os dados", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+
+                    // 4. Show the error messages
+                    apiErrorMessage.let{ message ->
+                        // Logic: Try to put the error under the correct field
+                        when {
+                            message?.contains("email", ignoreCase = true) == true -> {
+                                registerBinding.emailLayout.error = message
+                            }
+                            message?.contains("Nome", ignoreCase = true) == true ||
+                                    message?.contains("utilizador", ignoreCase = true) == true -> {
+                                registerBinding.usernameLayout.error = message
+                            }
+                            message?.contains("password", ignoreCase = true) == true -> {
+                                registerBinding.passwordLayout.error = message
+                            }
+                            else -> {
+                                // If we don't know which field it is, show a Toast
+                                Toast.makeText(this@LoginActivity, "Ups! Algo correu mal, por favor confirme os dados", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
                 }
+
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {

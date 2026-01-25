@@ -36,6 +36,8 @@ data class RegisterRequest(
 )
 
 data class ApiError(
+    val errors: List<String>,
+
     val message: String
 )
 

@@ -2,10 +2,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import pt.ipt.api.R
 import pt.ipt.api.model.Album
+import pt.ipt.api.model.GlobalVariables
 import pt.ipt.api.model.Music
 
 class MusicAdapter(
@@ -37,6 +40,7 @@ class MusicAdapter(
 
         fun bindView(music: Music) {
             titulo.text = music.nome
+
             playButton.setOnClickListener {
                 onPlayClicked(music)
             }

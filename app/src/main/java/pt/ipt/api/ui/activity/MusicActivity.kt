@@ -4,6 +4,7 @@ import MusicAdapter
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -70,6 +71,18 @@ class MusicActivity : BaseActivity() {
                         .load(imageUrl)
                         .placeholder(R.drawable.ic_launcher_foreground)
                         .into(albumImageView)
+
+                    //Escrever o nome do album e o seu artista ao lado da imagem
+                    val albumTitle : TextView = findViewById(R.id.title_album)
+                    albumTitle.setText(album.titulo.toString())
+
+                    val artist : TextView = findViewById(R.id.artist_name_album)
+
+                    //Se for nulo, reescrevemos o nome do artista
+                    if(artist.toString().equals("null"))
+                        artist.setText(getString(R.string.notFound_artist))
+                    else
+                        artist.setText(album.artista.toString())
 
                     configureList(album, musics)
 

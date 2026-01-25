@@ -10,4 +10,6 @@
     <string name="sideBar_name">Navigation Drawer</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="imagem_ablum_guide">Imagem Album</string>
+    <string name="notFound_artist">Artista não encontrado</string>
 </resources>

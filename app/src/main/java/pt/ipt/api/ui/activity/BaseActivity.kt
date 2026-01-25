@@ -15,6 +15,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.internal.NavigationMenuView
+import com.google.android.material.navigation.NavigationView
 import pt.ipt.api.R
 import pt.ipt.api.model.Music
 import pt.ipt.api.retrofit.service.playerService
@@ -46,10 +48,35 @@ open class BaseActivity : AppCompatActivity() {
         // pass the Open and Close toggle for the drawer layout listener
         // to toggle the button
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
-
         // to make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        actionBarDrawerToggle.syncState()
+
+
+        val navigationView : NavigationView = findViewById(R.id.nav_view)
+
+        navigationView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_account -> {
+                    // Action for Account
+                }
+                R.id.nav_settings -> {
+                    // Action for Artistas
+                }
+                R.id.nav_logout -> {
+                    val intent = Intent(this@BaseActivity, LoginActivity::class.java)
+
+                    //Comecar atividade
+                    startActivity(intent)
+                }
+            }
+
+            // Close the drawer
+            drawerLayout.closeDrawers()
+            true
+        }
     }
 
     @SuppressLint("InflateParams")

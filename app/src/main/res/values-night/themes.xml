@@ -3,5 +3,12 @@
     <style name="Base.Theme.API" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="drawerArrowStyle">@style/MyDrawerArrowStyle</item>
+    </style>
+
+    <style name="MyDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <!-- Change this to any color you want (e.g., Yellow or White) -->
+            <item name="color">#FFFFFF</item>
+            <item name="spinBars">true</item>
     </style>
 </resources>

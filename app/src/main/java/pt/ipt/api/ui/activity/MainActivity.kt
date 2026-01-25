@@ -68,7 +68,8 @@ class MainActivity : BaseActivity() {
     }
 
     fun openAlbum(albumID: Int) {
-        Toast.makeText(this@MainActivity, "Teste Olá Album", Toast.LENGTH_LONG).show()
+
+        //Toast.makeText(this@MainActivity, "Teste Olá Album", Toast.LENGTH_LONG).show()
 
         //Inicializar a classe da listagem de Musicas
         val intent = Intent(this, MusicActivity::class.java)
