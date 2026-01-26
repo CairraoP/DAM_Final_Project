@@ -15,7 +15,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.internal.NavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import pt.ipt.api.R
 import pt.ipt.api.model.Music
@@ -80,13 +79,14 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     @SuppressLint("InflateParams")
-     fun setContentViewChild(layoutResID: Int) {
+     fun setContentViewChild(view: View) {
             // 1. Find the container that was already inflated in onCreate
             val container = findViewById<FrameLayout>(R.id.contentFrame)
 
             // 2. Clear it just in case, then inflate the child layout into it
             container.removeAllViews()
-            layoutInflater.inflate(layoutResID, container, true)
+            container.addView(view)
+            //layoutInflater.inflate(layoutResID, container, true)
 
             // 3. Bind your player UI views (they exist in activity_base)
             // Ensure IDs match what is inside @layout/bottom_player

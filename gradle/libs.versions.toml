@@ -1,5 +1,6 @@
 [versions]
-agp = "8.13.2"
+agp = "8.9.1"
+androidQrgEncoder = "1.2.1"
 glide = "5.0.5"
 kotlin = "2.0.21"
 coreKtx = "1.17.0"
@@ -12,9 +13,14 @@ activity = "1.11.0"
 constraintlayout = "2.2.1"
 materialVersion = "1.11.0"
 media = "1.7.1"
+qrgenerator = "1.0.3"
+qrgeneratorVersion = "1.0.1"
 retrofit = "3.0.0"
+databindingRuntime = "9.0.0"
 
 [libraries]
+android-qrg-encoder = { module = "com.github.android-qrg-encoder:android-qrg-encoder", version.ref = "androidQrgEncoder" }
+androidmads-qrgenerator = { module = "com.github.androidmads:QRGenerator", version.ref = "qrgeneratorVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-media = { module = "androidx.media:media", version.ref = "media" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -27,7 +33,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material-v1110 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+qrgenerator = { module = "androidmads.library.qrgenerator:QRGenerator", version.ref = "qrgenerator" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

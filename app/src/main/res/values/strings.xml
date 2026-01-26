@@ -12,4 +12,5 @@
     <string name="nav_close">Close</string>
     <string name="imagem_ablum_guide">Imagem Album</string>
     <string name="notFound_artist">Artista não encontrado</string>
+    <string name="bot_o_para_mostrar_c_digo_qr_da_m_sica">Botão para mostrar código QR da música</string>
 </resources>

@@ -6,13 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import pt.ipt.api.R
+import pt.ipt.api.databinding.AlbumListBinding
 import pt.ipt.api.model.Album
 import pt.ipt.api.retrofit.RetrofitInitializer
-import pt.ipt.api.ui.adapter.MainAdapter
 import pt.ipt.api.retrofit.service.TokenManager
+import pt.ipt.api.ui.adapter.MainAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,9 +19,15 @@ import retrofit2.Response
 
 class MainActivity : BaseActivity() {
 
+    private lateinit var binding : AlbumListBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentViewChild(R.layout.album_list)
+
+        binding = AlbumListBinding.inflate(layoutInflater)
+
+        setContentViewChild(binding.root)
 
 
         if(!TokenManager.getToken().isNullOrEmpty()){
@@ -40,12 +45,13 @@ class MainActivity : BaseActivity() {
     }
 
     private fun configureList(Albums: List<Album>) {
-        val recyclerView: RecyclerView = findViewById(R.id.album_list_recyclerview)
-        recyclerView.adapter = MainAdapter(Albums, this){
+
+        binding.albumListRecyclerview.adapter = MainAdapter(Albums, this){
             albumID -> openAlbum(albumID)
         }
-        val layoutManager = StaggeredGridLayoutManager( 2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.layoutManager = layoutManager
+
+        binding.albumListRecyclerview.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     }
 
     private fun listAlbums() {

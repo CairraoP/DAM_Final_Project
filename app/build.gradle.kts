@@ -29,6 +29,7 @@ android {
 
     buildFeatures{
         viewBinding = true
+        dataBinding = true
     }
 
     compileOptions {
@@ -43,6 +44,8 @@ android {
 dependencies {
 
     implementation("com.google.android.material:material:1.3.0-alpha03")
+    implementation(libs.androidmads.qrgenerator)
+    implementation("com.google.zxing:core:3.5.4")
     implementation(libs.material.v1110)
     implementation(libs.androidx.media)
     implementation(libs.glide)  // latest Glide
