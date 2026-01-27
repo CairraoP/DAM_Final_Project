@@ -12,6 +12,10 @@
         android:title="Artistas" />
 
     <item
+        android:id="@+id/nav_album"
+        android:title="Gerir Álbuns" />
+
+    <item
         android:id="@+id/nav_logout"
         android:title="Sair" />
 

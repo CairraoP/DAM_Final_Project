@@ -79,6 +79,13 @@ open class BaseActivity : AppCompatActivity() {
 
         val navigationView : NavigationView = findViewById(R.id.nav_view)
 
+        val gerirAlbum = navigationView.menu.findItem(R.id.nav_album)
+
+        //Não permitir que utilizadores que não sejam artistas consigam ver a opção de criar/editar/apagar albuns
+        if(!TokenManager.getRole().contentEquals("Artista")){
+            gerirAlbum.isVisible = false
+        }
+
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_account -> {

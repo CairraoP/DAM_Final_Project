@@ -19,7 +19,8 @@ data class LoginRequest(
     val password: String
 )
 data class LoginResponse(
-    val token: Token
+    val token: Token,
+    val role: String
 )
 
 data class RegisterResponse(
@@ -31,7 +32,7 @@ data class RegisterResponse(
 data class RegisterRequest(
     val username: String,
     val password: String,
-    val is_artista: Boolean,
+    val isArtista: Boolean,
     val email: String
 )
 

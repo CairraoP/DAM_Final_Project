@@ -1,12 +1,13 @@
 package pt.ipt.api.retrofit;
 
-import pt.ipt.api.retrofit.service.AlbumService;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import pt.ipt.api.model.GlobalVariables
+import pt.ipt.api.retrofit.service.AlbumService
 import pt.ipt.api.retrofit.service.ApiClient.client
+import pt.ipt.api.retrofit.service.ArtistService
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitInitializer {
     private val gson:Gson = GsonBuilder().setLenient().create()
@@ -24,5 +25,7 @@ class RetrofitInitializer {
         .build()
 
     fun albumService() = retrofit.create(AlbumService::class.java)
+
+    fun artistService() = retrofit.create(ArtistService::class.java)
 
 }

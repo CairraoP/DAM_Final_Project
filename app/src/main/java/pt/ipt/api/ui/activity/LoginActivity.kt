@@ -79,12 +79,17 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
 
-                    var token = response.body()?.token?.result
+                    val roleUser = response.body()?.role
+                    val token = response.body()?.token?.result
+
 
                     if (!token.isNullOrEmpty()) {
+
+                        //Esta função irá guardar o nosso token, o nome do utilizador e a role do utilizador
                         TokenManager.saveToken(token)
 
                         TokenManager.saveUsername(username)
+                        TokenManager.saveRole(roleUser.toString())
 
                         //Dizer que queremos criar a "intenção" de sair desta atividade (thisLoginActivity)
                         // e ir para a atividade do album
@@ -126,13 +131,13 @@ class LoginActivity : AppCompatActivity() {
         val username = registerBinding.usernameField.text.toString()
         val email = registerBinding.emailField.text.toString()
         val password = registerBinding.passwordField.text.toString()
-        val is_artista = registerBinding.isArtista.isChecked
+        val isArtista = registerBinding.isArtista.isChecked
 
         val registBody = RegisterRequest(
             username = username,
             email = email,
             password = password,
-            is_artista = is_artista
+            isArtista = isArtista
         )
 
         // Make the login request

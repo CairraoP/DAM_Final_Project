@@ -7,7 +7,7 @@ object TokenManager {
     private var prefs: SharedPreferences? = null
 
     private var username : String? = null
-
+    private var role : String? = null
 
     fun init(context: Context) {
         prefs = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
@@ -28,7 +28,12 @@ object TokenManager {
     fun saveUsername(username: String) {
         TokenManager.username = username
     }
-
     fun getUsername(): String? = username
+
+    fun saveRole(role: String) {
+        TokenManager.role = role
+    }
+
+    fun getRole(): String? = role
 
 }
