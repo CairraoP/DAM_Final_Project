@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
@@ -100,16 +99,13 @@ class MusicActivity : BaseActivity() {
                         .into(albumImageView)
 
                     //Escrever o nome do album e o seu artista ao lado da imagem
-                    val albumTitle: TextView = findViewById(R.id.title_album)
-                    albumTitle.setText(album.titulo.toString())
+                    binding.artistNameAlbum.setText(album.artista.toString())
 
-                    val artist: TextView = findViewById(R.id.artist_name_album)
+                    binding.titleAlbum.setText(album.titulo)
 
                     //Se for nulo, reescrevemos o nome do artista
-                    if (artist.toString().equals("null"))
-                        artist.setText(getString(R.string.notFound_artist))
-                    else
-                        artist.setText(album.artista.toString())
+                    if (binding.artistNameAlbum.toString().equals("null"))
+                        binding.artistNameAlbum.setText(getString(R.string.notFound_artist))
 
                     configureList(album, musics)
 

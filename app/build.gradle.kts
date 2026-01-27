@@ -43,6 +43,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.lifecycle.process)
     implementation("com.google.android.material:material:1.3.0-alpha03")
     implementation(libs.androidmads.qrgenerator)
     implementation("com.google.zxing:core:3.5.4")

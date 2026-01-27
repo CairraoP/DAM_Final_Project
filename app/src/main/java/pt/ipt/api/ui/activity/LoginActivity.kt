@@ -1,19 +1,25 @@
 package pt.ipt.api.ui.activity
 
 import android.content.Intent
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import pt.ipt.api.retrofit.service.*
-import retrofit2.Call
-import retrofit2.Callback
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import pt.ipt.api.databinding.ActivityLoginBinding
 import pt.ipt.api.databinding.ActivityRegisterBinding
 import pt.ipt.api.retrofit.service.ApiClient.authService
+import pt.ipt.api.retrofit.service.ApiError
+import pt.ipt.api.retrofit.service.LoginRequest
+import pt.ipt.api.retrofit.service.LoginResponse
+import pt.ipt.api.retrofit.service.RegisterRequest
+import pt.ipt.api.retrofit.service.RegisterResponse
+import pt.ipt.api.retrofit.service.TokenManager
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
@@ -77,6 +83,8 @@ class LoginActivity : AppCompatActivity() {
 
                     if (!token.isNullOrEmpty()) {
                         TokenManager.saveToken(token)
+
+                        TokenManager.saveUsername(username)
 
                         //Dizer que queremos criar a "intenção" de sair desta atividade (thisLoginActivity)
                         // e ir para a atividade do album

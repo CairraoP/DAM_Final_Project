@@ -15,9 +15,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.material.navigation.NavigationView
 import pt.ipt.api.R
+import pt.ipt.api.databinding.AboutMenuBinding
 import pt.ipt.api.model.Music
+import pt.ipt.api.retrofit.service.TokenManager
 import pt.ipt.api.retrofit.service.playerService
 
 open class BaseActivity : AppCompatActivity() {
@@ -33,6 +38,9 @@ open class BaseActivity : AppCompatActivity() {
     // MUST be named playService so child Activities can access it
     protected var playService: playerService? = null
     private var bound = false
+    private lateinit var username : String
+
+    private lateinit var bindingAbout : AboutMenuBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +60,22 @@ open class BaseActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         actionBarDrawerToggle.syncState()
+        //guardar o nome de utilizador
+        username = TokenManager.getUsername().toString()
 
+        //Processo para ver o estado da música
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object :
+            DefaultLifecycleObserver {
+
+            override fun onStop(owner: LifecycleOwner) {
+                // A APP FOI PARA BACKGROUND (Utilizador saiu)
+                playService?.pause()
+            }
+
+            override fun onStart(owner: LifecycleOwner) {
+                playService?.resume()
+            }
+        })
 
         val navigationView : NavigationView = findViewById(R.id.nav_view)
 
@@ -69,6 +92,12 @@ open class BaseActivity : AppCompatActivity() {
 
                     //Comecar atividade
                     startActivity(intent)
+                }
+                R.id.nav_about -> {
+                        //Dar inflate ao xml do "Sobre" no menu.
+                        //Passa-lo para a frame child onde costuma ficar a informação da app
+                        bindingAbout = AboutMenuBinding.inflate(layoutInflater)
+                        setContentViewChild(bindingAbout.root)
                 }
             }
 

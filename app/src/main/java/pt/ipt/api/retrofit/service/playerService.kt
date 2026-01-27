@@ -53,7 +53,6 @@ class playerService : Service() {
             }
         }
 
-        // 🔥 Notify mini-player “music started”
         miniPlayerListener?.invoke(music, true)
     }
 

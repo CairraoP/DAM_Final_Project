@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">API</string>
+    <string name="app_name">spitifi</string>
     <string name="see_musicas">Ver Musicas</string>
     <string name="login">Login</string>
     <string name="register">Registar</string>
@@ -13,4 +13,8 @@
     <string name="imagem_ablum_guide">Imagem Album</string>
     <string name="notFound_artist">Artista não encontrado</string>
     <string name="bot_o_para_mostrar_c_digo_qr_da_m_sica">Botão para mostrar código QR da música</string>
+    <string name="albuns">Albuns</string>
+    <string name="frameworks"><![CDATA[• Retrofit & GSON (Square Inc.) - Comunicação API\n• Glide (BumpTech) - Gestão de Imagens\n• QRGenerator (AndroidMads) - Geração de QR Codes\n• ZXing Core (Google) - Processamento de QR/Barcodes\n• Material Components (Google) - UI/UX\n• AndroidX Jetpack - Estrutura e Retrocompatibilidade\n• ViewBinding & DataBinding - Vinculação de Dados]]></string>
+    <string name="bibliotecas_e_frameworks_usadas">Bibliotecas e Frameworks Usadas:</string>
+    <string name="n_25942_pedro_daniel_cairr_o_da_silva">Nº 25942 - Pedro Daniel Cairrão da Silva</string>
 </resources>
