@@ -53,7 +53,7 @@ class ManageAlbumActivity : BaseActivity() {
         setContentViewChild(binding.root)
 
         // Verificar se recebemos um ID
-        albumId = intent.getIntExtra("album_id", -1)
+        albumId = intent.getIntExtra("albumId", -1)
 
         if (albumId != -1) {
             loadAlbum(albumId)
@@ -126,36 +126,39 @@ class ManageAlbumActivity : BaseActivity() {
                 }
             })
     }
-
     private fun editAlbum() {
-        val title = binding.editTitle.text.toString()
+        val titleText = binding.editTitle.text.toString()
+        val artistText = albumOG?.artista ?: ""
 
-        if (title.isEmpty()) {
-            binding.editTitle.setText(albumOG?.titulo)
+        // 1. Prepare the text parts
+        val titlePart = titleText.toRequestBody("text/plain".toMediaTypeOrNull())
+        val artistPart = artistText.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        // 2. Prepare the photo part (only if a new one was selected)
+        // If uriFoto is null, the server won't update the photo
+        val fotoPart: MultipartBody.Part? = if (uriFoto != null) {
+            uriToMultipart(uriFoto!!, "FotoAlbum") // Use the helper we made earlier
+        } else {
+            null
         }
 
-
-        // criar uma cópia do álbum original mudando apenas o título
-        val albumParaEnviar = albumOG?.copy(titulo = binding.editTitle.text.toString())
-            ?: Album(
-                id = albumId, titulo = binding.editTitle.text.toString(),
-                foto =albumOG?.foto,
-                artista = albumOG?.artista,
-                musicas = albumOG!!.musicas
-            ) // Fallback se o original falhar
-
-        RetrofitInitializer().albumService().updateAlbum(albumId, albumParaEnviar)
-            .enqueue(object : Callback<Unit> {
-                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+        // 3. Make the call
+        RetrofitInitializer().albumService()
+            .updateAlbum(albumId, titlePart, artistPart, fotoPart)
+            .enqueue(object : Callback<Album> {
+                override fun onResponse(call: Call<Album>, response: Response<Album>) {
                     if (response.isSuccessful) {
                         Toast.makeText(this@ManageAlbumActivity, "Atualizado!", Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
-                        Toast.makeText(this@ManageAlbumActivity, "Erro na edição", Toast.LENGTH_SHORT).show()
+                        // Log the error body to see exactly why it failed
+                        Log.e("API_ERROR", response.errorBody()?.string() ?: "Unknown")
+                        Toast.makeText(this@ManageAlbumActivity, "Erro: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 }
-                override fun onFailure(call: Call<Unit>, t: Throwable) {
-                    Toast.makeText(this@ManageAlbumActivity, "Falha de rede", Toast.LENGTH_SHORT).show()
+
+                override fun onFailure(call: Call<Album>, t: Throwable) {
+                    Toast.makeText(this@ManageAlbumActivity, "Falha: ${t.message}", Toast.LENGTH_LONG).show()
                 }
             })
     }

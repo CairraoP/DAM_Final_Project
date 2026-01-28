@@ -59,7 +59,8 @@
                     app:iconTint="@android:color/white"
                     app:backgroundTint="@android:color/holo_blue_dark"
                     android:layout_marginEnd="4dp"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:onClick="editAlbumInActivity"/>
 
                 <Button
                     android:id="@+id/delete_album"
@@ -70,7 +71,8 @@
                     app:icon="@drawable/trash_icon"
                     app:backgroundTint="@android:color/holo_red_dark"
                     android:layout_marginStart="4dp"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:onClick="deleteAlbumInActivity"/>
 
             </LinearLayout>
 

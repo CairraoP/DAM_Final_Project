@@ -1,11 +1,11 @@
 package pt.ipt.api.ui.activity
 
 import MusicAdapter
-import android.graphics.Bitmap
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidmads.library.qrgenearator.QRGContents
@@ -19,6 +19,7 @@ import pt.ipt.api.model.Album
 import pt.ipt.api.model.GlobalVariables
 import pt.ipt.api.model.Music
 import pt.ipt.api.retrofit.RetrofitInitializer
+import pt.ipt.api.retrofit.service.TokenManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,17 +28,6 @@ class MusicActivity : BaseActivity() {
 
     private lateinit var binding: MusicListBinding
     private lateinit var albumImageView: ImageView
-
-    // on below line we are creating
-    // a variable for bitmap
-    lateinit var bitmap: Bitmap
-
-    // on below line we are creating
-    // a variable for qr encoder.
-    lateinit var qrEncoder: QRGEncoder
-
-
-    lateinit var generateQRBtn: Button
 
     private var albumId: Int = -1
 
@@ -48,7 +38,6 @@ class MusicActivity : BaseActivity() {
 
         setContentViewChild(binding.root)
 
-        //albumImageView = findViewById(R.id.fotoAlbum)
         albumImageView = binding.fotoAlbum
         // Receive album ID
         albumId = intent.getIntExtra("album", -1)
@@ -107,6 +96,11 @@ class MusicActivity : BaseActivity() {
                     if (binding.artistNameAlbum.toString().equals("null"))
                         binding.artistNameAlbum.setText(getString(R.string.notFound_artist))
 
+                    if(!TokenManager.getUsername().equals(album.artista)){
+                        binding.editAlbum.visibility = View.GONE
+                        binding.deleteAlbum.visibility = View.GONE
+                    }
+
                     configureList(album, musics)
 
                 } else {
@@ -154,5 +148,41 @@ class MusicActivity : BaseActivity() {
             // The library uses com.google.zxing.WriterException
             Log.e("QR_ERROR", "Erro ao gerar QR: ${e.message}")
         }
+    }
+
+     fun editAlbumInActivity(view: View){
+        val edit = Intent(this, ManageAlbumActivity::class.java).putExtra("albumId",albumId)
+
+        startActivity(edit)
+        finish()
+    }
+
+     fun deleteAlbumInActivity(){
+        deleteAlbum(albumId)
+    }
+
+    fun deleteAlbum(id: Int) {
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Eliminar")
+            .setMessage("Tem a certeza que deseja eliminar este álbum?")
+            .setPositiveButton("Sim") { _, _ ->
+
+                RetrofitInitializer().albumService().deleteAlbum(id).enqueue(object : Callback<Unit> {
+                    override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@MusicActivity, "Eliminado!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        } else {
+                            // REQUISITO: Mensagem de erro adequada (Controlo de acesso)
+                            if (response.code() == 403) {
+                                Toast.makeText(this@MusicActivity, "Ups! Algo corre mal, retifique os dados", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<Unit>, t: Throwable) {}
+                })
+            }
+            .setNegativeButton("Não", null)
+            .show()
     }
 }

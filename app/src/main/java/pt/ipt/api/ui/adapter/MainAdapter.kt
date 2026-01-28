@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import pt.ipt.api.R
 import pt.ipt.api.model.Album
 import pt.ipt.api.model.GlobalVariables
-import pt.ipt.api.model.Music
 
 class MainAdapter(private val albums: List<Album>,
                   private val context: Context,
@@ -38,7 +37,6 @@ class MainAdapter(private val albums: List<Album>,
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val title: TextView = itemView.findViewById(R.id.album_item_titulo)
-        val description: TextView = itemView.findViewById(R.id.album_item_description)
         val imgView: ImageView = itemView.findViewById(R.id.album_item_foto)
 
         fun bindView(album: Album) {
