@@ -99,9 +99,9 @@ class MusicActivity : BaseActivity() {
                         .into(albumImageView)
 
                     //Escrever o nome do album e o seu artista ao lado da imagem
-                    binding.artistNameAlbum.setText(album.artista.toString())
+                    binding.artistNameAlbum.setText(getString(R.string.artista_nome)+album.artista.toString())
 
-                    binding.titleAlbum.setText(album.titulo)
+                    binding.titleAlbum.setText(getString(R.string.album)+album.titulo)
 
                     //Se for nulo, reescrevemos o nome do artista
                     if (binding.artistNameAlbum.toString().equals("null"))

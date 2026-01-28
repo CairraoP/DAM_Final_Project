@@ -4,22 +4,26 @@
     tools:ignore="HardcodedText">
 
     <item
+        android:id="@+id/nav_home"
+        android:title="@string/in_cio" />
+
+    <item
         android:id="@+id/nav_account"
-        android:title="A Minha Conta" />
+        android:title="@string/a_minha_conta" />
 
     <item
         android:id="@+id/nav_settings"
-        android:title="Artistas" />
+        android:title="@string/artistas" />
 
     <item
         android:id="@+id/nav_album"
-        android:title="Gerir Álbuns" />
+        android:title="@string/gerir_lbuns" />
 
     <item
         android:id="@+id/nav_logout"
-        android:title="Sair" />
+        android:title="@string/sair" />
 
     <item
         android:id="@+id/nav_about"
-        android:title="Sobre" />
+        android:title="@string/sobre" />
 </menu>

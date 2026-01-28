@@ -17,4 +17,13 @@
     <string name="frameworks"><![CDATA[• Retrofit & GSON (Square Inc.) - Comunicação API\n• Glide (BumpTech) - Gestão de Imagens\n• QRGenerator (AndroidMads) - Geração de QR Codes\n• ZXing Core (Google) - Processamento de QR/Barcodes\n• Material Components (Google) - UI/UX\n• AndroidX Jetpack - Estrutura e Retrocompatibilidade\n• ViewBinding & DataBinding - Vinculação de Dados]]></string>
     <string name="bibliotecas_e_frameworks_usadas">Bibliotecas e Frameworks Usadas:</string>
     <string name="n_25942_pedro_daniel_cairr_o_da_silva">Nº 25942 - Pedro Daniel Cairrão da Silva</string>
+    <string name="in_cio">Início</string>
+    <string name="a_minha_conta">A Minha Conta</string>
+    <string name="artistas">Artistas</string>
+    <string name="gerir_lbuns">Gerir Álbuns</string>
+    <string name="sair">Sair</string>
+    <string name="sobre">Sobre</string>
+    <string name="atualizar_lbum">Atualizar Álbum</string>
+    <string name="album">Album: </string>
+    <string name="artista_nome">Artista: </string>
 </resources>

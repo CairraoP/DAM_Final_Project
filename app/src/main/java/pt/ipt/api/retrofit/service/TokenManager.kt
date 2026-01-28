@@ -14,7 +14,10 @@ object TokenManager {
     }
 
     fun saveToken(token: String) {
-        prefs?.edit()?.putString("jwt_token", token)?.apply()
+
+        prefs?.edit()?.remove("jwt_token")?.commit()
+        //prefs?.edit()?.clear("jwt_token")?.apply()
+        prefs?.edit()?.putString("jwt_token", token)?.commit()
     }
 
     fun getToken(): String? = prefs?.getString("jwt_token", null)
@@ -28,7 +31,9 @@ object TokenManager {
     fun saveUsername(username: String) {
         TokenManager.username = username
     }
+
     fun getUsername(): String? = username
+
 
     fun saveRole(role: String) {
         TokenManager.role = role

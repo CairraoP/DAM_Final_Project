@@ -106,6 +106,17 @@ open class BaseActivity : AppCompatActivity() {
                         bindingAbout = AboutMenuBinding.inflate(layoutInflater)
                         setContentViewChild(bindingAbout.root)
                 }
+                R.id.nav_home -> {
+                    //Recarregar a MainActivity
+                    val intent = Intent(this@BaseActivity, MainActivity::class.java)
+                    //Comecar atividade
+                    startActivity(intent)
+                }
+                R.id.nav_album -> {
+                    val intent = Intent(this@BaseActivity, ManageAlbumActivity::class.java)
+                    //Comecar atividade
+                    startActivity(intent)
+                }
             }
 
             // Close the drawer

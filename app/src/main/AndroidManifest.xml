@@ -25,6 +25,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".ui.activity.ManageAlbumActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
