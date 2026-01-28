@@ -24,6 +24,6 @@
     <string name="sair">Sair</string>
     <string name="sobre">Sobre</string>
     <string name="atualizar_lbum">Atualizar Álbum</string>
-    <string name="album">Album: </string>
+    <string name="album">Album:</string>
     <string name="artista_nome">Artista: </string>
 </resources>

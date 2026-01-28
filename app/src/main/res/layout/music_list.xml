@@ -34,15 +34,46 @@
                 android:id="@+id/title_album"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/artist_name_album"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <!-- NEW: Horizontal layout to align buttons side-by-side -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/edit_album"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:icon="@drawable/edit_icon"
+                    app:iconTint="@android:color/white"
+                    app:backgroundTint="@android:color/holo_blue_dark"
+                    android:layout_marginEnd="4dp"
+                    android:textSize="12sp"/>
+
+                <Button
+                    android:id="@+id/delete_album"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:iconTint="@android:color/white"
+                    app:icon="@drawable/trash_icon"
+                    app:backgroundTint="@android:color/holo_red_dark"
+                    android:layout_marginStart="4dp"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <!-- You can add a vertical LinearLayout here if you want text next to the image -->
