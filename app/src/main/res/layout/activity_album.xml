@@ -96,14 +96,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32.dp"
                 android:padding="12.dp"
-                android:text="Guardar Álbum" />
+                android:text="@string/criar_atualizar_lbum" />
 
             <Button
                 android:id="@+id/btnDelete"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Eliminar Álbum"
+                android:text="@string/eliminar_lbum"
                 android:textColor="#F44336"
                 android:visibility="gone"
                 tools:visibility="visible" />

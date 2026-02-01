@@ -71,14 +71,11 @@
                     app:icon="@drawable/trash_icon"
                     app:backgroundTint="@android:color/holo_red_dark"
                     android:layout_marginStart="4dp"
-                    android:textSize="12sp"
-                    android:onClick="deleteAlbumInActivity"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <!-- You can add a vertical LinearLayout here if you want text next to the image -->
 
     </LinearLayout>
 

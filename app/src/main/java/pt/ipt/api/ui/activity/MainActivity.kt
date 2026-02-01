@@ -64,11 +64,11 @@ class MainActivity : BaseActivity() {
                     val albums = response.body()!!
                     configureList(albums)
                 } else {
-                    Toast.makeText(this@MainActivity, "No albums found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Não foi encontrado nenhum álbum", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<List<Album>?>?, t: Throwable?) {
-                t?.message?.let { Log.e("onFailure error", it) }
+                t?.message?.let { Log.e("Erro inesperado, pedimos desculpa", it) }
             }
         })
     }

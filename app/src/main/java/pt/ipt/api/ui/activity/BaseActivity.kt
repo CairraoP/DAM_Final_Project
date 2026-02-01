@@ -89,7 +89,11 @@ open class BaseActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_account -> {
-                    // Action for Account
+
+                    val intent = Intent(this@BaseActivity, AccountActivity::class.java)
+
+                    //Comecar atividade
+                    startActivity(intent)
                 }
                 R.id.nav_settings -> {
                     // Action for Artistas

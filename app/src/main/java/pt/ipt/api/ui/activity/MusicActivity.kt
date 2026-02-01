@@ -47,6 +47,11 @@ class MusicActivity : BaseActivity() {
         } else {
             listMusics()
         }
+
+        binding.deleteAlbum.setOnClickListener {
+            deleteAlbum(albumId)
+        }
+
     }
 
     fun configureList(albumObject: Album, musics: List<Music>) {
@@ -88,15 +93,15 @@ class MusicActivity : BaseActivity() {
                         .into(albumImageView)
 
                     //Escrever o nome do album e o seu artista ao lado da imagem
-                    binding.artistNameAlbum.setText(getString(R.string.artista_nome)+album.artista.toString())
+                    binding.artistNameAlbum.setText(getString(R.string.artista_nome) + album.artista.toString())
 
-                    binding.titleAlbum.setText(getString(R.string.album)+album.titulo)
+                    binding.titleAlbum.setText(getString(R.string.album) + album.titulo)
 
                     //Se for nulo, reescrevemos o nome do artista
                     if (binding.artistNameAlbum.toString().equals("null"))
                         binding.artistNameAlbum.setText(getString(R.string.notFound_artist))
 
-                    if(!TokenManager.getUsername().equals(album.artista)){
+                    if (!TokenManager.getUsername().equals(album.artista)) {
                         binding.editAlbum.visibility = View.GONE
                         binding.deleteAlbum.visibility = View.GONE
                     }
@@ -150,15 +155,11 @@ class MusicActivity : BaseActivity() {
         }
     }
 
-     fun editAlbumInActivity(view: View){
-        val edit = Intent(this, ManageAlbumActivity::class.java).putExtra("albumId",albumId)
+    fun editAlbumInActivity(view: View) {
+        val edit = Intent(this, ManageAlbumActivity::class.java).putExtra("albumId", albumId)
 
         startActivity(edit)
         finish()
-    }
-
-     fun deleteAlbumInActivity(){
-        deleteAlbum(albumId)
     }
 
     fun deleteAlbum(id: Int) {
@@ -167,20 +168,30 @@ class MusicActivity : BaseActivity() {
             .setMessage("Tem a certeza que deseja eliminar este álbum?")
             .setPositiveButton("Sim") { _, _ ->
 
-                RetrofitInitializer().albumService().deleteAlbum(id).enqueue(object : Callback<Unit> {
-                    override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                        if (response.isSuccessful) {
-                            Toast.makeText(this@MusicActivity, "Eliminado!", Toast.LENGTH_SHORT).show()
-                            finish()
-                        } else {
-                            // REQUISITO: Mensagem de erro adequada (Controlo de acesso)
-                            if (response.code() == 403) {
-                                Toast.makeText(this@MusicActivity, "Ups! Algo corre mal, retifique os dados", Toast.LENGTH_LONG).show()
+                RetrofitInitializer().albumService().deleteAlbum(id)
+                    .enqueue(object : Callback<Unit> {
+                        override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@MusicActivity, "Eliminado!", Toast.LENGTH_SHORT)
+                                    .show()
+
+                                val intent = Intent(this@MusicActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                // REQUISITO: Mensagem de erro adequada (Controlo de acesso)
+                                if (response.code() == 403) {
+                                    Toast.makeText(
+                                        this@MusicActivity,
+                                        "Não tem permissão de Admin!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                             }
                         }
-                    }
-                    override fun onFailure(call: Call<Unit>, t: Throwable) {}
-                })
+
+                        override fun onFailure(call: Call<Unit>, t: Throwable) {}
+                    })
             }
             .setNegativeButton("Não", null)
             .show()

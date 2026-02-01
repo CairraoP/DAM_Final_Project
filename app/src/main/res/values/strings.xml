@@ -26,4 +26,6 @@
     <string name="atualizar_lbum">Atualizar Álbum</string>
     <string name="album">Album:</string>
     <string name="artista_nome">Artista: </string>
+    <string name="criar_atualizar_lbum">Criar/ Atualizar Álbum</string>
+    <string name="eliminar_lbum">Eliminar Álbum</string>
 </resources>
