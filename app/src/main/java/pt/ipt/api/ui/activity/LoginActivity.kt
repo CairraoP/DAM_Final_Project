@@ -151,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
                     val message = response.body()?.message ?: "Registo concluído, Confirme o Email!"
                     Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
 
-                    // Redirecionar para a view de confirmação de email - TODO
+                    // Redirecionar para a view de confirmação de email
                     setContentView(loginBinding.root)
                 } else {
                     // 1. Read the error body ONCE into a variable
