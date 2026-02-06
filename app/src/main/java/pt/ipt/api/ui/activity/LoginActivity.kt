@@ -109,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Ocorreu um erro, pedimos desculpa", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -148,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     // Mostrar a mensagem vinda da API
-                    val message = response.body()?.message ?: "Registo concluído!"
+                    val message = response.body()?.message ?: "Registo concluído, Confirme o Email!"
                     Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
 
                     // Redirecionar para a view de confirmação de email - TODO
