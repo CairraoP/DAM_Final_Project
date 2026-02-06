@@ -12,10 +12,6 @@
         android:title="@string/a_minha_conta" />
 
     <item
-        android:id="@+id/nav_settings"
-        android:title="@string/artistas" />
-
-    <item
         android:id="@+id/nav_album"
         android:title="@string/gerir_lbuns" />
 
