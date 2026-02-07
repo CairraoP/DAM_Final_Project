@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "pt.ipt.api"
+    namespace = "pt.ipt.spitifi"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "pt.ipt.api"
+        applicationId = "pt.ipt.spitifi"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
