@@ -114,6 +114,8 @@ open class BaseActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.nav_album -> {
+
+                    playService?.pause()
                     val intent = Intent(this@BaseActivity, ManageAlbumActivity::class.java)
                     //Comecar atividade
                     startActivity(intent)
