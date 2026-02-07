@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_app_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.API"
+        android:theme="@style/Theme.spitifi"
         android:usesCleartextTraffic="true">
 
         <activity
