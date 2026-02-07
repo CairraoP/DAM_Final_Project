@@ -29,7 +29,6 @@ class AccountActivity : BaseActivity() {
         }
 
         binding.userName.setText(TokenManager.getUsername())
-        binding.userAlbumCount.setText("Função a Implementar")
     }
 
     fun deleteAccount(){
