@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "API"
+rootProject.name = "spitifi"
 include(":app")
