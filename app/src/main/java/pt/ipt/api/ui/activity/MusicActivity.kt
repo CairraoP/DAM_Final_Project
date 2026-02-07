@@ -18,7 +18,7 @@ import pt.ipt.api.databinding.MusicListBinding
 import pt.ipt.api.model.Album
 import pt.ipt.api.model.GlobalVariables
 import pt.ipt.api.model.Music
-import pt.ipt.api.retrofit.RetrofitInitializer
+import pt.ipt.api.retrofit.service.ApiClient.albumService
 import pt.ipt.api.retrofit.service.TokenManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -73,7 +73,7 @@ class MusicActivity : BaseActivity() {
 
     private fun listMusics() {
 
-        val call = RetrofitInitializer().albumService().getAlbum(albumId)
+        val call = albumService.getAlbum(albumId)
 
         call.enqueue(object : Callback<Album?> {
             override fun onResponse(call: Call<Album?>?, response: Response<Album?>?) {
@@ -168,7 +168,7 @@ class MusicActivity : BaseActivity() {
             .setMessage("Tem a certeza que deseja eliminar este álbum?")
             .setPositiveButton("Sim") { _, _ ->
 
-                RetrofitInitializer().albumService().deleteAlbum(id)
+                albumService.deleteAlbum(id)
                     .enqueue(object : Callback<Unit> {
                         override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                             if (response.isSuccessful) {

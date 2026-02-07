@@ -1,5 +1,7 @@
 package pt.ipt.api.retrofit.service
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import pt.ipt.api.model.GlobalVariables
 import retrofit2.Retrofit
@@ -7,7 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-     val client = OkHttpClient.Builder()
+    private val gson:Gson = GsonBuilder().create()
+    private val URL = GlobalVariables.CON_STRING
+
+    val client = OkHttpClient.Builder()
         .addInterceptor { chain ->
             val token = TokenManager.getToken()
             val newRequest = if (token != null) {
@@ -20,8 +25,24 @@ object ApiClient {
         }
         .build()
 
+    /*
+    *
+    * Retrofit para aceder aos objetos da API
+    *
+    */
+     val retrofitAPI: Retrofit = Retrofit.Builder()
+        .baseUrl(URL+"api/")
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build()
+
+    val albumService: AlbumService = retrofitAPI.create(AlbumService::class.java)
+
+    val artistService: ArtistService = retrofitAPI.create(ArtistService::class.java)
+
+
     val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(GlobalVariables.CON_STRING)
+        .baseUrl(URL)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

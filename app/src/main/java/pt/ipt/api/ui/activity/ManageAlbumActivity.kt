@@ -1,25 +1,25 @@
     package pt.ipt.api.ui.activity
 
     import android.app.AlertDialog
-    import android.content.Intent
-    import android.net.Uri
-    import android.os.Bundle
-    import android.provider.OpenableColumns
-    import android.util.Log
-    import android.view.View
-    import android.widget.Toast
-    import androidx.activity.result.contract.ActivityResultContracts
-    import okhttp3.MediaType.Companion.toMediaTypeOrNull
-    import okhttp3.MultipartBody
-    import okhttp3.RequestBody.Companion.toRequestBody
-    import pt.ipt.api.R
-    import pt.ipt.api.databinding.ActivityAlbumBinding
-    import pt.ipt.api.model.Album
-    import pt.ipt.api.retrofit.RetrofitInitializer
-    import pt.ipt.api.retrofit.service.TokenManager
-    import retrofit2.Call
-    import retrofit2.Callback
-    import retrofit2.Response
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.provider.OpenableColumns
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import pt.ipt.api.R
+import pt.ipt.api.databinding.ActivityAlbumBinding
+import pt.ipt.api.model.Album
+import pt.ipt.api.retrofit.service.ApiClient.albumService
+import pt.ipt.api.retrofit.service.TokenManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
     class ManageAlbumActivity : BaseActivity() {
 
@@ -115,8 +115,7 @@
                 uriToMultipart(uri, "MusicasNovas") // Nome deve ser igual ao List no C#
             }
 
-            RetrofitInitializer().albumService()
-                .createAlbum(titleBody, fotoPart, musicasParts)
+            albumService.createAlbum(titleBody, fotoPart, musicasParts)
                 .enqueue(object : Callback<Album> {
                     override fun onResponse(call: Call<Album>, response: Response<Album>) {
                         if (response.isSuccessful) {
@@ -154,8 +153,7 @@
             }
 
             // 3. Make the call
-            RetrofitInitializer().albumService()
-                .updateAlbum(albumId, titlePart, artistPart, fotoPart)
+           albumService.updateAlbum(albumId, titlePart, artistPart, fotoPart)
                 .enqueue(object : Callback<Album> {
                     override fun onResponse(call: Call<Album>, response: Response<Album>) {
                         if (response.isSuccessful) {
@@ -183,7 +181,7 @@
                 .setMessage("Tem a certeza que deseja eliminar este álbum?")
                 .setPositiveButton("Sim") { _, _ ->
 
-                    RetrofitInitializer().albumService().deleteAlbum(id).enqueue(object : Callback<Unit> {
+                    albumService.deleteAlbum(id).enqueue(object : Callback<Unit> {
                             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                                 if (response.isSuccessful) {
                                     Toast.makeText(this@ManageAlbumActivity, "Eliminado!", Toast.LENGTH_SHORT).show()
@@ -206,7 +204,7 @@
         }
 
         private fun loadAlbum(id: Int) {
-            RetrofitInitializer().albumService().getAlbum(id).enqueue(object : Callback<Album> {
+           albumService.getAlbum(id).enqueue(object : Callback<Album> {
                 override fun onResponse(call: Call<Album>, response: Response<Album>) {
                     if (response.isSuccessful) {
                         binding.editTitle.setText(response.body()?.titulo)

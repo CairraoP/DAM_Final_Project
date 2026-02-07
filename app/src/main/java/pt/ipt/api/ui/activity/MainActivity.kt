@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import pt.ipt.api.databinding.AlbumListBinding
 import pt.ipt.api.model.Album
-import pt.ipt.api.retrofit.RetrofitInitializer
+import pt.ipt.api.retrofit.service.ApiClient.albumService
 import pt.ipt.api.retrofit.service.TokenManager
 import pt.ipt.api.ui.adapter.MainAdapter
 import retrofit2.Call
@@ -55,7 +55,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun listAlbums() {
-        val call = RetrofitInitializer().albumService().list()
+        val call = albumService.list()
         call.enqueue(object : Callback<List<Album>?> {
             override fun onResponse(call: Call<List<Album>?>?, response: Response<List<Album>?>?) {
                 Log.d("API", "Response code: ${response?.code()}")

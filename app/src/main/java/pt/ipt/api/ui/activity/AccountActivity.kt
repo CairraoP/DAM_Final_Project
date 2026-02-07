@@ -8,7 +8,8 @@ import android.widget.Toast
 import okhttp3.ResponseBody
 import pt.ipt.api.databinding.ActivityAccountBinding
 import pt.ipt.api.model.Album
-import pt.ipt.api.retrofit.RetrofitInitializer
+import pt.ipt.api.retrofit.service.ApiClient.albumService
+import pt.ipt.api.retrofit.service.ApiClient.artistService
 import pt.ipt.api.retrofit.service.TokenManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,7 +38,7 @@ class AccountActivity : BaseActivity() {
                 .setMessage("Tem a certeza que deseja eliminar a sua conta? Esta ação é irreversível.")
                 .setPositiveButton("Eliminar") { _, _ ->
 
-                    RetrofitInitializer().artistService().deleteAccount(TokenManager.getUsername())
+                    artistService.deleteAccount(TokenManager.getUsername())
                         .enqueue(object : Callback<ResponseBody> {
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             if (response.isSuccessful) {
@@ -67,7 +68,7 @@ class AccountActivity : BaseActivity() {
 
 
     private fun albumCount() {
-        val call = RetrofitInitializer().albumService().list()
+        val call = albumService.list()
         call.enqueue(object : Callback<List<Album>?> {
             override fun onResponse(call: Call<List<Album>?>?, response: Response<List<Album>?>?) {
                 Log.d("API", "Response code: ${response?.code()}")
