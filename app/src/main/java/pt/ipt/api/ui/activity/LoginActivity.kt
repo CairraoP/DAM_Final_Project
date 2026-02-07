@@ -148,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     // Mostrar a mensagem vinda da API
-                    val message = response.body()?.message ?: "Registo concluído, Confirme o Email!"
+                    val message = "Registo concluído, Confirme o Email!"
                     Toast.makeText(this@LoginActivity, message, Toast.LENGTH_LONG).show()
 
                     // Redirecionar para a view de confirmação de email

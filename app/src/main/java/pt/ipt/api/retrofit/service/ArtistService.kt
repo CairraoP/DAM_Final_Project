@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 interface ArtistService {
 
-    // Buscar um album pelo ID
+    // Buscar todos os artistas
     @GET("artist")
     fun getArtists(): Call<List<Artist>>
 
@@ -18,7 +18,7 @@ interface ArtistService {
     fun getArtist(@Path("username") string: String): Call<Artist>
 
 
-    // Buscar um album pelo ID
+    // Apagar conta pelo username
     @DELETE("Authentication/{userId}")
     fun deleteAccount(@Path("userId") string: String?): Call<ResponseBody>
 }
